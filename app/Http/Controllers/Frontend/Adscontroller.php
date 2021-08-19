@@ -10,7 +10,7 @@ use Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
-class Adscontroller extends Controller
+class AdsController extends Controller
 {
    /**
      * Display a listing of the resource.

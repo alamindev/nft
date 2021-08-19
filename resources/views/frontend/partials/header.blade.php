@@ -3,12 +3,12 @@
         <div class="flex justify-between items-center">
             <div class="h-10 flex items-center">
                 <a href="{{ route('home') }}"><figure class="">
-                    <img class="h-8 sm:h-10" src="{{ url('storage' . $logoLink) }}" alt="logo">
+                    <img class="h-6 sm:h-10" src="{{ url('storage' . $logoLink) }}" alt="logo">
                 </figure></a>
             </div>
             <div class="pl-2">
                 <nav class="flex items-center">
-                    <ul class="pr-0 md:pr-10 lg:pr-20 pt-5 md:pt-0 fixed -right-64 md:right-0 top-16 md:top-0 bottom-0 w-56 sm:w-64  md:w-auto bg-gray-800 md:bg-transparent
+                    <ul class="pr-0 md:pr-2 xl:pr-20 pt-5 md:pt-0 fixed -right-64 md:right-0 top-16 md:top-0 bottom-0 w-56 sm:w-64  md:w-auto bg-gray-800 md:bg-transparent
                     md:relative md:flex transition-all duration-300 ease-in z-40
                     " id="sidebar-menu">
                         <li class="px-5 md:py-0 py-2 md:px-2"><a href="{{ route('home') }}" class="font-semibold  hover:text-gray-300 md:hover:text-black text-base md:text-sm lg:text-base {{ Route::is('home')  ? 'text-gray-600 md:text-black' : 'text-white md:text-gray-600' }}">Home</a></li>
@@ -18,10 +18,14 @@
                         <li class="px-5 md:py-0 py-2 md:px-2"><a href="{{ route('allnft') }}" class="font-semibold text-white hover:text-gray-300 md:hover:text-black text-base md:text-sm lg:text-base {{ Route::is('allnft')  ? 'text-gray-600 md:text-black' : 'text-white md:text-gray-600' }}">All NFTs</a></li>
 
                         <li class="px-5 md:py-0 py-2 md:px-2"><a href="{{ route('prelaunch') }}" class="font-semibold hover:text-gray-300 md:hover:text-black text-base md:text-sm lg:text-base {{ Route::is('prelaunch')  ? 'text-gray-600 md:text-black' : 'text-white md:text-gray-600' }}">Prelaunch </a></li>
+                        <li class="px-5 md:py-0 py-2 md:px-2"><a href="{{ route('favourite_lists') }}" class="font-semibold hover:text-gray-300 md:hover:text-black text-base md:text-sm lg:text-base {{ Route::is('favourite_lists')  ? 'text-gray-600 md:text-black' : 'text-white md:text-gray-600' }}">Favorites </a></li>
 
                         @foreach($header_menus as $menu)
-                            <li class="px-5 md:py-0 py-2 md:px-2"><a href="{{ route('page.show', $menu->slug) }}" class="font-semibold text-white md:text-gray-600 hover:text-gray-300 md:hover:text-black text-base md:text-sm lg:text-base">{{ $menu->title }} </a></li>
+                            <li class="px-5 md:py-0 py-2 md:px-2"><a href="{{ route('page.view', $menu->slug) }}" class="font-semibold text-white md:text-gray-600 hover:text-gray-300 md:hover:text-black text-base md:text-sm lg:text-base">{{ $menu->title }} </a></li>
                         @endforeach
+                        <li class="px-5 md:py-0 py-2 md:px-2">
+                            <a class="mt-2 md:mt-0 md:ml-2  py-2 px-5 bg-transparent border border-white text-white hover:bg-white hover:text-black md:text-indigo-600 md:border-indigo-600 text-sm transition-all duration-200 md:hover:bg-indigo-600 md:hover:text-white" href="{{ route('projects.create') }}">Submit Project</a>
+                        </li>
                     </ul>
                     <div class="flex items-center">
                         @guest

@@ -33,7 +33,7 @@
                         <td>Created Date</td>
                         <td>:</td>
                        <td>
-                   {{\Carbon\Carbon::parse($show->created_at)->format('Y-m-d') }}</td>
+                   {{\Carbon\Carbon::parse($show->created_at)->format('d-m-Y') }}</td>
                     </tr>
                     <tr>
                         <td>Status</td>

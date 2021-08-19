@@ -23,6 +23,7 @@ All Projects
                 <th data-priority="1">Name</th>
                 <th data-priority="2">Photo</th>
                 <th data-priority="4">Status</th>
+                <th data-priority="4">Vote</th>
                 <th data-priority="5">Action</th>
             </tr>
         </thead>
@@ -64,6 +65,12 @@ All Projects
             {
                 data: 'status',
                 name: 'Status',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'vote',
+                name: 'Vote',
                 orderable: true,
                 searchable: true
             },

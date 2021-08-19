@@ -8,21 +8,24 @@
 
     <td>
         @php
-            $date = \Carbon\Carbon::parse($favourite->project->launch_date)->format('Y-m-d');
+            $date = \Carbon\Carbon::parse($favourite->project->launch_date)->format('d-m-Y');
             $time = \Carbon\Carbon::parse($favourite->project->launch_time)->format('h:i A');
         @endphp
         <span class="text-xs md:text-sm lg:text-base">{{ $date . ' ' . $time }}</span>
     </td>
     <td class="hidden lg:block ">
-        <div class="flex pt-3">
+        <div class="flex items-center pt-3">
             @if($favourite->project->website_link != null)
-            <a href="{{ $favourite->project->website_link }}" target="_blank"><i class="fas fa-globe-americas p-2 text-indigo-600"></i></a>
+            <a href="{{ $favourite->project->website_link }}" target="_blank"><i class="fas fa-globe-americas p-1 text-indigo-600 text-2xl"></i></a>
+            @endif
+            @if($favourite->project->opensea_link != null)
+            <a href="{{ $favourite->project->opensea_link }}" target="_blank"><img class="w-8 h-8 p-1" src="{{ asset('images/opensea.svg') }}" alt=""/></a>
             @endif
             @if($favourite->project->discord_link != null)
-            <a href="{{ $favourite->project->discord_link }}" target="_blank" ><i class="fab fa-discord p-2 text-indigo-600"></i></a>
+            <a href="{{ $favourite->project->discord_link }}" target="_blank" ><i class="fab fa-discord p-1 text-indigo-600 text-2xl"></i></a>
             @endif
             @if($favourite->project->twitter_link != null)
-            <a  href="{{ $favourite->project->twitter_link }}"  target="_blank"    ><i class="fab fa-twitter p-2 text-indigo-600 "></i></a>
+            <a  href="{{ $favourite->project->twitter_link }}"  target="_blank"    ><i class="fab fa-twitter p-1 text-indigo-600 text-2xl "></i></a>
             @endif
         </div>
     </td>

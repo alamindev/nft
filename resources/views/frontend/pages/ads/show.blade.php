@@ -48,7 +48,7 @@ Show ads
                                 <td class="py-2">Created Date</td>
                                 <td class="py-2">:</td>
                                 <td class="py-2">
-                                    {{ \Carbon\Carbon::parse($show->created_at)->format('Y-m-d') }}
+                                    {{ \Carbon\Carbon::parse($show->created_at)->format('d-m-Y') }}
                                 </td>
                             </tr>
                         </table>

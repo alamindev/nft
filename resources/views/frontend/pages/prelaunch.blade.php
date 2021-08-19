@@ -17,6 +17,7 @@ Prelaunch
                 <table class="w-full ranking--table custom--table pb-3">
                     <thead>
                         <tr>
+                            <th class="text-sm sm:text-base w-16">Rank</th>
                             <th class="text-sm sm:text-base">Name</th>
                             <th class="text-sm sm:text-base">Launch Date</th>
                             <th class="hidden md:flex items-center text-sm sm:text-base">Links</th>

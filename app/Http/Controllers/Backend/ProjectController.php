@@ -19,21 +19,25 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Project::with('user','promoted_project')->latest()->get();
+            $data = Project::with('user','promoted_project')
+            ->withSum('votes','votes')->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('user', function ($row) {
-                    return '
-                        <a href='. route('user.show', $row->user->id) .' class="">
-                            <img src=' . asset($row->user->photo) . ' class="rounded-circle" width="50" alt="page-image">
-                            <p>'.$row->user->name.'</p>
-                        </a>
-                    ';
+                    $user= '';
+                       $user .= '<a href='. route('user.show', $row->user->id) .' class="d-flex flex-column align-items-center">';
+                        if($row->user->photo == null){
+                            $user .=  '<img src='.  asset("images/avatar.png")  .' class="rounded-circle" width="50" alt="user-image">';
+                        }else{
+                            $user .= '<img src=' . asset($row->user->photo) . ' class="rounded-circle" width="50" alt="page-image">';
+                        }
+
+                        $user .= '<p>'.$row->user->name.'</p></a> ';
+                    return $user;
                 })
                 ->addColumn('photo', function ($row) {
                     return '<img src=' . asset($row->photo) . ' width="100" alt="page-image">';
                 })
-
                 ->addColumn('status', function ($row) {
                     $status = '';
                     if($row->status === 1){
@@ -49,11 +53,17 @@ class ProjectController extends Controller
                     }
                     return $status;
                 })
+                ->addColumn('vote', function ($row) {
+                    if($row->votes_sum_votes != null){
+                        return $row->votes_sum_votes;
+                    }
+                    return '0';
+                })
                 ->addColumn('action', function ($row) {
                     $btn = '<a href=' . route("admin.projects.show", $row->id) . '><i class="fa fa-eye p-2 text-primary"></i></a><a href="javascript:void(0)"  data-remote=' . route("admin.projects.destroy", $row->id) . ' class="delete"><i class="fa fa-trash p-2 text-danger"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['user','action', 'photo','status'])
+                ->rawColumns(['user','action', 'photo','status','vote'])
                 ->make(true);
         }
 

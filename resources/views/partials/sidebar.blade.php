@@ -14,6 +14,9 @@
                 <li class="{{ (Route::is('admin.ads') || Route::is('page.create')) ? 'active' : '' }}">
                     <a href="{{ route('admin.ads') }}"><i class="menu-icon fa fa fa-adn "></i> Ads </a>
                 </li>
+                <li class="{{ Route::is('admin.votes') ? 'active' : '' }}">
+                    <a href="{{ route('admin.votes') }}"><i class="menu-icon fa fa fa-user "></i> Votes </a>
+                </li>
                 <li class="{{ (Route::is('pages') || Route::is('page.create')) ? 'active' : '' }}">
                     <a href="{{ route('pages') }}"><i class="menu-icon fa fa-address-book-o "></i> Pages </a>
                 </li>

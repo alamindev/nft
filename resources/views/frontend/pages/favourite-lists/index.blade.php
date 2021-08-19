@@ -1,5 +1,5 @@
 @section('title')
-Favourite lists
+Favorites
 @endsection
 <x-app-layout>
     <div class="sm:py-10  lg:px-16">
@@ -11,7 +11,7 @@ Favourite lists
                 <div class="sm:w-4/6   sm:pl-2 md:pl-5">
                     <div class="bg-white p-5">
                         <div class="flex w-full items-center justify-between border-b pb-2">
-                            <p class="text-lg text-gray-800 dark:text-gray-100 font-bold">Fevourite Lists</p>
+                            <p class="text-lg text-gray-800 dark:text-gray-100 font-bold">Favorites Lists</p>
                         </div>
                         <div class="py-5">
                             <table id="example" class="stripe hover" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">

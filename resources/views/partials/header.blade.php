@@ -2,7 +2,7 @@
     <div class="top-left">
         <div class="navbar-header">
             <a href="{{ route('home') }}"><figure class="">
-                <img class="h-8 sm:h-10" src="{{ url('storage' . $logoLink) }}" alt="logo">
+                <img style="height: 25px" src="{{ url('storage' . $logoLink) }}" alt="logo">
             </figure></a>
             <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
         </div>

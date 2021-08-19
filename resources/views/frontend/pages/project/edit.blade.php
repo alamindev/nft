@@ -13,7 +13,7 @@ Edit project
     setTimeout(function(){
         $(document).ready(function() {
             var date = Date.now();
-            $('#launch_date').datepicker({ format: "yy-mm-dd", startDate: date  });
+            $('#launch_date').datepicker({ format: "yy-mm-dd"    });
             $('#launch_time').timepicker({ 'timeFormat': 'H:i' });
         });
         ClassicEditor.create( document.querySelector( '#editor' ) )
@@ -59,6 +59,13 @@ Edit project
                                     @endif
                                 </div>
                                 <div class="mt-4 flex flex-col w-full">
+                                    <label for="opensea_link" class="pb-2 text-sm font-bold text-gray-800 dark:text-gray-100">Opensea link</label>
+                                    <input type="text" id="opensea_link" name="opensea_link"  class="input-two"  value="{{ $project->opensea_link }}"    />
+                                    @if($errors->has('opensea_link'))
+                                        <div class="text-red-500">{{ $errors->first('opensea_link') }}</div>
+                                    @endif
+                                </div>
+                                <div class="mt-4 flex flex-col w-full">
                                     <label for="discord_link" class="pb-2 text-sm font-bold text-gray-800 dark:text-gray-100">Discord link</label>
                                     <input type="text" id="discord_link" name="discord_link"  class="input-two"   value="{{ $project->discord_link }}"     />
                                     @if($errors->has('discord_link'))
@@ -75,16 +82,26 @@ Edit project
                                 <div class="flex flex-col md:flex-row">
                                     <div class="mt-4 flex flex-col w-full">
                                         <label for="launch_date" class="pb-2 text-sm font-bold text-gray-800 dark:text-gray-100">Launch Date</label>
-                                        <input type="text" id="launch_date" name="launch_date"  class="input-two"    value="{{ $project->launch_date }}"  />
+                                        <input type="text" readonly id="launch_date" name="launch_date"  class="input-two"    value="{{ $project->launch_date }}"  />
                                         @if($errors->has('launch_date'))
                                             <div class="text-red-500">{{ $errors->first('launch_date') }}</div>
                                         @endif
                                     </div>
                                     <div class="mt-4 flex flex-col w-full md:pl-5">
                                         <label for="launch_time" class="pb-2 text-sm font-bold text-gray-800 dark:text-gray-100">Launch Time</label>
-                                        <input type="text" id="launch_time" name="launch_time"  class="input-two" value="{{ $project->launch_time }}"  />
+                                        <input type="text"   id="launch_time" name="launch_time"  class="input-two" value="{{ $project->launch_time }}"  />
                                         @if($errors->has('launch_time'))
                                             <div class="text-red-500">{{ $errors->first('launch_time') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="mt-4 flex flex-col w-full md:pl-5">
+                                        <label for="timezone" class="pb-2 text-sm font-bold text-gray-800 dark:text-gray-100">Timezone</label>
+                                        <select name="timezone" class="input-two">
+                                            <option value="est" @if($project->timezone == 'est') selected @endif >EST</option>
+                                            <option value="cest" @if($project->timezone == 'cest') selected @endif>CEST</option>
+                                        </select>
+                                        @if($errors->has('timezone'))
+                                            <div class="text-red-500">{{ $errors->first('timezone') }}</div>
                                         @endif
                                     </div>
                                 </div>

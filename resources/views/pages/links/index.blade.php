@@ -31,7 +31,7 @@ Links
                                         <tr>
                                             <td class="serial">{{$index + $links->firstItem()}}</td>
                                             <td><a class="text-lowercase" target="_blank" href="{{ $link->link }}">{{ $link->link }}</a></td>
-                                            <td>{{ \Carbon\Carbon::parse($link->created_at)->format('Y-m-d') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($link->created_at)->format('d-m-Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($link->created_at)->format('H:i') }}</td>
                                             <td>
                                                <form method="post" action="{{ route('link.approve', $link->id) }}">

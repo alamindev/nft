@@ -62,7 +62,11 @@ Route::prefix('admin')->middleware(['auth','is_admin'])->group(function(){
     Route::get('/ads/view/{id}', [App\Http\Controllers\Backend\AdsController::class, 'show'])->name('admin.ads.show');
     Route::delete('/ads/destroy/{id}', [App\Http\Controllers\Backend\AdsController::class, 'destroy'])->name('admin.ads.destroy');
 
-
+    // start coding for Custom Vote route
+    Route::get('/votes', [App\Http\Controllers\Backend\CustomVoteController::class, 'index'])->name('admin.votes');
+    Route::get('/votes/edit/{id}', [App\Http\Controllers\Backend\CustomVoteController::class, 'edit'])->name('admin.votes.edit');
+    Route::post('/votes/store', [App\Http\Controllers\Backend\CustomVoteController::class, 'store'])->name('admin.votes.store');
+    Route::post('/votes/update/{id}', [App\Http\Controllers\Backend\CustomVoteController::class, 'update'])->name('admin.votes.update');
 
     /**
      *
@@ -76,7 +80,8 @@ Route::prefix('admin')->middleware(['auth','is_admin'])->group(function(){
 /**
  * frontend route
  */
-
+Route::get('/optimize', [App\Http\Controllers\Frontend\HomeController::class, 'optimize'])->name('optimize');
+Route::get('/clear-optimize', [App\Http\Controllers\Frontend\HomeController::class, 'optimizeClear'])->name('optimizeClear');
 Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('home');
 Route::get('/newly-listed', [App\Http\Controllers\Frontend\HomeController::class, 'NewlyListed'])->name('newly_listed');
 Route::get('/all-nft', [App\Http\Controllers\Frontend\HomeController::class, 'AllNft'])->name('allnft');
@@ -89,7 +94,7 @@ Route::get('/search', [App\Http\Controllers\Frontend\HomeController::class, 'Sea
  * start coding for page route
  */
 
-Route::get('/p/{page:slug}', [App\Http\Controllers\Frontend\PageController::class, 'show'])->name('page.show');
+Route::get('/p/{page:slug}', [App\Http\Controllers\Frontend\PageController::class, 'show'])->name('page.view');
 
 
 Route::middleware(['auth'])->group(function(){
@@ -121,9 +126,9 @@ Route::middleware(['auth'])->group(function(){
 
 
 
-    Route::get('/favourite-lists', [App\Http\Controllers\Frontend\FavouriteController::class, 'index'])->name('favourite_lists');
-    Route::get('/add-favourite/{project_id}', [App\Http\Controllers\Frontend\FavouriteController::class, 'Favourite'])->name('add.favourite');
-    Route::get('/unfavourite/{project_id}', [App\Http\Controllers\Frontend\FavouriteController::class, 'Unfavourite'])->name('add.unfavourite');
+    Route::get('/favorites', [App\Http\Controllers\Frontend\FavouriteController::class, 'index'])->name('favourite_lists');
+    Route::get('/add-favorites/{project_id}', [App\Http\Controllers\Frontend\FavouriteController::class, 'Favourite'])->name('add.favourite');
+    Route::get('/unfavorites/{project_id}', [App\Http\Controllers\Frontend\FavouriteController::class, 'Unfavourite'])->name('add.unfavourite');
 
 
     Route::get('/add-vote/{project_id}', [App\Http\Controllers\Frontend\VoteController::class, 'Vote'])->name('add.vote');

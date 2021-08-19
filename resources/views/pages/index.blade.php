@@ -99,13 +99,17 @@ Dashboard
                                         <tr>
                                             <td class="serial">{{ $i++}}.</td>
                                             <td>
-                                                <a href="{{ route('user.show', $project->user->id) }}" class="">
-                                                    <img src="{{ asset($project->user->photo) }}" class="rounded-circle" width="50" alt="page-image">
+                                                <a href="{{ route('user.show', $project->user->id) }}" class="d-flex flex-column align-items-center">
+                                                    @if($project->user->photo == null)
+                                                    <img src="{{ asset('images/avatar.png') }}" class="rounded-circle" width="50" alt="user-image">
+                                                    @else
+                                                    <img src="{{ asset($project->user->photo) }}" class="rounded-circle" width="50" alt="user-image">
+                                                    @endif
                                                     <p>{{ $project->user->name }}</p>
                                                 </a>
                                             </td>
                                             <td>{{ $project->name }}</td>
-                                            <td><img src="{{ asset($project->photo) }}" width="100" alt="page-image"></td>
+                                            <td><img src="{{ asset($project->photo) }}" width="100" alt="project-image"></td>
                                             <td>
                                                 @if($project->status === 1)
                                                     @if($project->promoted_project && $project->promoted_project->project_id === $project->id)
@@ -171,8 +175,12 @@ Dashboard
                                         <tr>
                                             <td class="serial">{{ $i++}}.</td>
                                             <td>
-                                                <a href="{{ route('user.show', $ad->user->id) }}" class="">
-                                                    <img src="{{ asset($ad->user->photo) }}" class="rounded-circle" width="50" alt="page-image">
+                                                <a href="{{ route('user.show', $ad->user->id) }}" class="d-flex flex-column align-items-center">
+                                                    @if($project->user->photo == null)
+                                                    <img src="{{ asset('images/avatar.png') }}" class="rounded-circle" width="50" alt="user-image">
+                                                    @else
+                                                    <img src="{{ asset($project->user->photo) }}" class="rounded-circle" width="50" alt="user-image">
+                                                    @endif
                                                     <p>{{ $ad->user->name }}</p>
                                                 </a>
                                             </td>
@@ -180,7 +188,7 @@ Dashboard
                                             <td ><img src="{{ asset($ad->desktop_ads) }}"    alt="page-image" width="200"></td>
                                             <td><img src="{{ asset($ad->mobile_ads) }}" width="100" alt="page-image"></td>
                                             <td>
-                                               {{\Carbon\Carbon::parse($ad->created_at)->format('Y-m-d')}}
+                                               {{\Carbon\Carbon::parse($ad->created_at)->format('d-m-Y')}}
                                             </td>
                                             <td>
                                                 @if($ad->status === 1)
@@ -196,7 +204,7 @@ Dashboard
                                         </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="6" class="text-center">No data found!</td>
+                                                <td colspan="8" class="text-center">No data found!</td>
                                             </tr>
                                         @endforelse
                                     </tbody>

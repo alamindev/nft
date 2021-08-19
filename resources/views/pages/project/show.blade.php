@@ -33,7 +33,7 @@
                         <td>Launch Date</td>
                         <td>:</td>
                        <td>   @php
-                        $date = \Carbon\Carbon::parse($show->launch_date)->format('Y-m-d');
+                        $date = \Carbon\Carbon::parse($show->launch_date)->format('d-m-Y');
                        $time = \Carbon\Carbon::parse($show->launch_time)->format('h:i A');
                    @endphp
                    {{ $date . ' ' . $time }}</td>

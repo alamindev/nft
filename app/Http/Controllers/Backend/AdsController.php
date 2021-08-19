@@ -22,12 +22,16 @@ class AdsController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('user', function ($row) {
-                    return '
-                        <a href='. route('user.show', $row->user->id) .' class="">
-                            <img src=' . asset($row->user->photo) . ' class="rounded-circle" width="50" alt="page-image">
-                            <p>'.$row->user->name.'</p>
-                        </a>
-                    ';
+                    $user= '';
+                       $user .= '<a href='. route('user.show', $row->user->id) .' class="d-flex flex-column align-items-center">';
+                        if($row->user->photo == null){
+                            $user .=  '<img src='.  asset("images/avatar.png")  .' class="rounded-circle" width="50" alt="user-image">';
+                        }else{
+                            $user .= '<img src=' . asset($row->user->photo) . ' class="rounded-circle" width="50" alt="page-image">';
+                        }
+
+                        $user .= '<p>'.$row->user->name.'</p></a> ';
+                    return $user;
                 })
                 ->addColumn('desktop_ads', function ($row) {
                     return '<img src=' . asset($row->desktop_ads) . ' width="300" alt="page-image">';

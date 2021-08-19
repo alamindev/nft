@@ -13,6 +13,24 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
+
+    public function optimize(){
+
+        \Artisan::call('optimize');
+        \Artisan::call('config:cache');
+        \Artisan::call('route:cache');
+
+        return 'optimized';
+    }
+    public function optimizeClear(){
+
+        \Artisan::call('cache:clear');
+        \Artisan::call('view:clear');
+        \Artisan::call('config:clear');
+        \Artisan::call('route:clear');
+
+        return 'clear-optimize';
+    }
     /**
      * showing the home page
      *
@@ -24,14 +42,16 @@ class HomeController extends Controller
         $project_ids = PromotedProject::take(10)->pluck('project_id');
         $promoted_projects = Project::with('favourite')->withCount('votes', 'votes')
                                     ->whereIn('id', $project_ids)
-                                    ->withSum('votes','votes')
-                                    ->orderByDesc('votes_sum_votes')
+                                    ->withSum('custom_vote','vote')
+                                    ->orderByDesc('custom_vote_sum_vote')
+                                    ->where('status', 1)
                                     ->get();
           $projects = Project::with('favourite')->withCount('votes', 'votes')
                                 ->whereNotIn('id', $project_ids)
-                                ->withSum('votes','votes')
-                                ->orderByDesc('votes_sum_votes')
+                                 ->withSum('custom_vote','vote')
+                                ->orderByDesc('custom_vote_sum_vote')
                                 ->inRandomOrder()
+                                ->where('status', 1)
                                 ->take(100)
                                 ->paginate(12);
         return view('frontend.pages.index',compact('ads','promoted_projects', 'projects'));
@@ -47,9 +67,10 @@ class HomeController extends Controller
         $ads = Ad::where('status', 1)->inRandomOrder()->limit(3)->get();
          $date = Carbon::now()->subDays(5);
         $projects = Project::with('favourite')->withCount('votes', 'votes')
-                        ->withSum('votes','votes')
+                         ->withSum('custom_vote','vote')
                         ->where('created_at', '>=', $date)
-                        ->orderByDesc('votes_sum_votes')
+                        ->orderByDesc('custom_vote_sum_vote')
+                        ->where('status', 1)
                         ->inRandomOrder()
                         ->paginate(50);
         return view('frontend.pages.new-listed',compact('ads', 'projects'));
@@ -64,9 +85,10 @@ class HomeController extends Controller
     {
         $ads = Ad::where('status', 1)->inRandomOrder()->limit(3)->get();
         $projects = Project::with('favourite')->withCount('votes', 'votes')
-                        ->withSum('votes','votes')
-                        ->orderByDesc('votes_sum_votes')
+                         ->withSum('custom_vote','vote')
+                        ->orderByDesc('custom_vote_sum_vote')
                         ->inRandomOrder()
+                        ->where('status', 1)
                         ->paginate(100);
             return view('frontend.pages.all-nft',compact('ads', 'projects'));
     }
@@ -80,10 +102,11 @@ class HomeController extends Controller
     {
         $ads = Ad::where('status', 1)->inRandomOrder()->limit(3)->get();
         $projects = Project::with('favourite')->withCount('votes', 'votes')
-                        ->withSum('votes','votes')
-                        ->orderByDesc('votes_sum_votes')
+                         ->withSum('custom_vote','vote')
+                        ->orderByDesc('custom_vote_sum_vote')
                         ->whereDate('launch_date', '>=', Carbon::now()->addDay(1))
                         ->inRandomOrder()
+                        ->where('status', 1)
                         ->paginate(100);
         return view('frontend.pages.prelaunch',compact('ads', 'projects'));
     }
@@ -95,9 +118,9 @@ class HomeController extends Controller
     public function details($slug)
     {
         $ads = Ad::where('status', 1)->inRandomOrder()->limit(3)->get();
-        $project= Project::withSum('votes','votes')->where('slug', $slug)->first();
+        $project= Project::withSum('custom_vote','vote')->where('status', 1)->where('slug', $slug)->first();
         if($project){
-            $todayVote = Vote::where('project_id', $project->id)->sum('votes');
+            $todayVote = Vote::whereDate('updated_at', Carbon::today())->where('project_id', $project->id)->sum('votes');
             return view('frontend.pages.project-details',compact('ads','project','todayVote'));
         }
         return abort(404);

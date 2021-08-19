@@ -68,7 +68,6 @@
 
 .custom--table tr td{
     padding: 5px 20px;
-    height: 100%
 }
 #example tr td{
     height: 100%
@@ -84,7 +83,7 @@
     background-color: #ececec;
 }
 .ranking--table thead th {
-    padding-left: 40px;
+    padding-left: 15px;
     padding-bottom: 10px;
     text-align: left;
 }

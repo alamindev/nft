@@ -38,7 +38,7 @@ Promoted project
                                                 <td><img src="{{ asset($promote->project->photo) }}" width="100" alt="page-image"></td>
                                                 <td>
                                                     @php
-                                                    $date = \Carbon\Carbon::parse($promote->project->launch_date)->format('Y-m-d');
+                                                    $date = \Carbon\Carbon::parse($promote->project->launch_date)->format('d-m-Y');
                                                     $time = \Carbon\Carbon::parse($promote->project->launch_time)->format('h:i A');
                                                 @endphp
                                                 {{ $date . ' ' . $time }}

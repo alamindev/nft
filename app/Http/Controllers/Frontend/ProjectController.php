@@ -31,21 +31,29 @@ class ProjectController extends Controller
                 })
                 ->addColumn('links', function ($row) {
                     $links= '';
+                    $links .= '<div class="flex items-center">';
                     if($row->website_link != null){
-                        $links.= '<a href='.$row->website_link.' target="_blank"><i class="fas fa-globe-americas p-2 text-indigo-600"></i></a>';
+                        $links.= '<a href='.$row->website_link.' target="_blank"><i class="fas fa-globe-americas p-1 text-indigo-600 text-lg"></i></a>';
+                    }
+                    if($row->opensea_link != null){
+                        $links.= '<a href='.$row->opensea_link.' target="_blank">
+                            <img class="w-5 h-5" src='. asset('images/opensea.svg') .' alt=""/>
+                        </a>';
                     }
                     if($row->discord_link != null){
-                        $links.= '<a href='.$row->discord_link.' target="_blank" ><i class="fab fa-discord p-2 text-indigo-600"></i></a>';
+                        $links.= '<a href='.$row->discord_link.' target="_blank" ><i class="fab fa-discord p-1 text-indigo-600 text-lg"></i></a>';
                     }
                     if($row->twitter_link != null){
-                        $links.= '<a href='.$row->twitter_link.' target="_blank"    ><i class="fab fa-twitter p-2 text-indigo-600"></i></a>';
+                        $links.= '<a href='.$row->twitter_link.' target="_blank"    ><i class="fab fa-twitter p-1 text-indigo-600 text-lg"></i></a>';
                     }
+                    $links .= "</div>";
                     return $links;
                 })
                 ->addColumn('launch_date', function ($row) {
                     $date = Carbon::parse($row->launch_date)->format('Y-m-d');
                     $time = Carbon::parse($row->launch_time)->format('h:i A');
-                    return $date .' ' . $time;
+                    $timezone = $row->timezone;
+                    return '<span class="text-xs">'. $date .' ' . $time . ' <span class="uppercase">'. $timezone.'</span></span>';
                 })
                 ->addColumn('status', function ($row) {
                     if($row->status == 0){
@@ -92,6 +100,7 @@ class ProjectController extends Controller
             'twitter_link' => 'nullable|url',
             'launch_date' => 'required',
             'launch_time' => 'required',
+            'timezone' => 'required',
         ]);
 
         $img = $this->upload_site_photo($request);
@@ -99,6 +108,7 @@ class ProjectController extends Controller
         $project->project_id = time() . Str::random(3);
         $project->name = $request->name;
         $project->slug =   Slug::createSlug($request->name);
+        $project->opensea_link = $request->opensea_link;
         $project->website_link = $request->website_link;
         $project->discord_link = $request->discord_link;
         $project->twitter_link = $request->twitter_link;
@@ -106,6 +116,7 @@ class ProjectController extends Controller
         $project->launch_time = $request->launch_time;
         $project->description = $request->description;
         $project->photo = $img;
+        $project->timezone = $request->timezone;
         $project->user_id = auth()->user()->id;
         $project->save();
 
@@ -182,6 +193,7 @@ class ProjectController extends Controller
             'twitter_link' => 'nullable|url',
             'launch_date' => 'required',
             'launch_time' => 'required',
+            'timezone' => 'required',
         ]);
 
         $project  = Project::find($id);
@@ -192,11 +204,13 @@ class ProjectController extends Controller
 
         $project->name = $request->name;
         $project->website_link = $request->website_link;
+        $project->opensea_link = $request->opensea_link;
         $project->discord_link = $request->discord_link;
         $project->twitter_link = $request->twitter_link;
         $project->launch_date = $request->launch_date;
         $project->launch_time = $request->launch_time;
         $project->description = $request->description;
+        $project->timezone = $request->timezone;
         $project->photo =  $this->update_site_image($request, $project);
         $project->save();
 

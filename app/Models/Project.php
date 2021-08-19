@@ -38,6 +38,10 @@ class Project extends Model
     {
         return $this->hasMany(Vote::class);
     }
+    public function custom_vote()
+    {
+        return $this->hasMany(CustomVote::class);
+    }
 
     public function favourite()
     {

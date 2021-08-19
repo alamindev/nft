@@ -19,11 +19,13 @@ class CreateProjectsTable extends Migration
             $table->string('slug');
             $table->string('photo');
             $table->string('website_link')->nullable();
+            $table->string('opensea_link')->nullable();
             $table->string('discord_link')->nullable();
             $table->string('twitter_link')->nullable();
             $table->date('launch_date');
             $table->time('launch_time');
-            $table->text('description');
+            $table->longText('description');
+            $table->string('timezone');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
